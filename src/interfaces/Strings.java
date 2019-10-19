@@ -16,6 +16,8 @@ public interface Strings {
     public static final String searching = "Searching...";
     public static final String moving = "Moving...";
     public static final String moveFiles = "Move Files";
+    public static final String copyFiles = "Copy Files";
+    public static final String deleteFiles = "Delete Files";
     public static final String removing = "Removing...";
     public static final String filesFound = "Files Found:";
 
