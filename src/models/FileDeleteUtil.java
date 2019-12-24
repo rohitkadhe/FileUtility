@@ -25,13 +25,7 @@ public class FileDeleteUtil extends FileSearchUtil {
 	        }
 	    }
 	}
-//	public void deleteFilesWithNameContainingText(String path, String text)
-//	{
-//		ArrayList<File> files = searchFilesByNameContainingText(path, text);
-//		for(File file:files) {			
-//			moveToTrash(file);
-//		}
-//	}
+	
 	public void deleteAllFiles(String path) 
 	{	
 		
