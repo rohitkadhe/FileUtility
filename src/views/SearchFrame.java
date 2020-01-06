@@ -5,6 +5,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import interfaces.Colors;
 import interfaces.SearchOption;
+import interfaces.Strings;
+
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -12,12 +16,12 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 
-public class SearchFrame extends JFrame implements Colors, SearchOption {
+public class SearchFrame extends JFrame implements Colors, SearchOption, Strings {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField fileNameInput;
-	private JTextField directoryInput;
+	private JTextField browseDirectoryInput;
 	private  String[] comboBoxOptions = {EQUALS, BEGINS_WITH, ENDS_WITH, CONTAINS};
 	private JComboBox comboBox = new JComboBox(comboBoxOptions);
 	private FileUtilButton browseDirectoryButton = new FileUtilButton("Browse");
@@ -27,7 +31,7 @@ public class SearchFrame extends JFrame implements Colors, SearchOption {
 	private JLabel searchFilterLabel = new JLabel("Search Filter");
 
 	public SearchFrame() {
-		setTitle("File Utility");
+		setTitle(HOMEPAGETITLE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 196);
 		contentPane = new JPanel();
@@ -36,11 +40,11 @@ public class SearchFrame extends JFrame implements Colors, SearchOption {
 		
 		JLabel searchQueryLabel = new JLabel("File Name");
 		fileNameInput = new JTextField();
-		getFileNameInput().setColumns(10);
+		fileNameInput.setColumns(10);
 		JLabel directoryLabel = new JLabel("Directory");
 		
-		setDirectoryInput(new JTextField());
-		getDirectoryInput().setColumns(10);
+		browseDirectoryInput = new JTextField();
+		browseDirectoryInput.setColumns(10);
 		this.setVisible(true);
 		contentPane.setBackground(PRIMARY);
 		
@@ -69,7 +73,7 @@ public class SearchFrame extends JFrame implements Colors, SearchOption {
 							.addComponent(fileNameInput, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
 							.addGap(105))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(directoryInput, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+							.addComponent(browseDirectoryInput, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(browseDirectoryButton, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
 							.addGap(5))
@@ -96,7 +100,7 @@ public class SearchFrame extends JFrame implements Colors, SearchOption {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(10)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(directoryInput)
+								.addComponent(browseDirectoryInput)
 								.addComponent(directoryLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 						.addComponent(browseDirectoryButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -106,24 +110,28 @@ public class SearchFrame extends JFrame implements Colors, SearchOption {
 					.addGap(10)
 					.addComponent(searchButton, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
 		);
-		
 	}
-	public JTextField getDirectoryInput() {
-		return directoryInput;
+	
+	public void setBrowseDirectoryButtonListener(ActionListener al) {
+		browseDirectoryButton.setListenser(al);
 	}
-	public void setDirectoryInput(JTextField directoryInput) {
-		this.directoryInput = directoryInput;
+	public void setSearchButtonListener(ActionListener al) {
+		searchButton.setListenser(al);
 	}
-	public FileUtilButton getBrowseDirectoryButton() {
-		return browseDirectoryButton;
+	
+	public String getFileNameInputText() {
+		return fileNameInput.getText().toString();
 	}
-	public FileUtilButton getSearchButton() {
-		return searchButton;
+	
+	public String getBrowseDirectoryInputText() {
+		return browseDirectoryInput.getText().toString();
 	}
-	public JComboBox getComboBox() {
-		return comboBox;
+	
+	public void setBrowseDirectoryInputText(String text) {
+		browseDirectoryInput.setText(text);
 	}
-	public JTextField getFileNameInput() {
-		return fileNameInput;
+	
+	public String getComboBoxSelectedItem() {
+		return comboBox.getSelectedItem().toString();
 	}
 }

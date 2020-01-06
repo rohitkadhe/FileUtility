@@ -28,7 +28,7 @@ public class TableFrame extends JFrame implements Strings, Colors {
 	
 	public TableFrame(Object ...columnNames) {
 		table = new JTable(new DefaultTableModel(new Object[][] {},columnNames));
-		model = (DefaultTableModel) getTable().getModel();
+		model = (DefaultTableModel) table.getModel();
 		this.add(createUpperPanel(), BorderLayout.NORTH);
 		this.add(createCenterPanel(), BorderLayout.CENTER);
 		
@@ -51,27 +51,20 @@ public class TableFrame extends JFrame implements Strings, Colors {
 		
 		centerPanel.setBackground(PRIMARY);
 		centerPanel.setLayout(new BorderLayout());  
-		JScrollPane scroll = new JScrollPane(getTable());
+		JScrollPane scroll = new JScrollPane(table);
 		
 		//This is to set the table columns color 
-		JTableHeader header = getTable().getTableHeader();
+		JTableHeader header = table.getTableHeader();
 		header.setBackground(PRIMARY);
 		header.setReorderingAllowed(false);
 		
-		//Sets the table background to white 
-		getTable().setOpaque(true);
-		getTable().setFillsViewportHeight(true);
+		table.setFillsViewportHeight(true);
 		
 		centerPanel.add(scroll, BorderLayout.CENTER);
 		
 		return centerPanel;
 	}
-	public DefaultTableModel getModel() {
-		return model;
-	}
-	public JTable getTable() {
-		return table;
-	}
+	
 	public void addTableRowListener() {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -88,5 +81,9 @@ public class TableFrame extends JFrame implements Strings, Colors {
 				}
 			}
 		});
+	}
+	
+	public void addRowToTable(Object[] rowData) {
+		model.addRow(rowData);
 	}
 }

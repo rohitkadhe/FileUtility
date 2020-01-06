@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import models.FileSearchUtil;
 import views.MainFrame;
 import views.SearchFrame;
@@ -24,8 +25,8 @@ public class SearchFileController extends GUIController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			searchFrame = new SearchFrame();
-			searchFrame.getBrowseDirectoryButton().setListenser(new BrowseButtonListener());
-			searchFrame.getSearchButton().setListenser(new SearchButtonListener());
+			searchFrame.setBrowseDirectoryButtonListener(new BrowseButtonListener());
+			searchFrame.setSearchButtonListener(new SearchButtonListener());
 			 
 		}
 	}
@@ -34,19 +35,27 @@ public class SearchFileController extends GUIController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try {				
-				String searchOption = (String)searchFrame.getComboBox().getSelectedItem();
-				String fileName = searchFrame.getFileNameInput().getText().toString();
-				String directoryPath = searchFrame.getDirectoryInput().getText().toString();
+			try {	
+				String searchOption = searchFrame.getComboBoxSelectedItem();
+				String fileName = searchFrame.getFileNameInputText();
+				String directoryPath = searchFrame.getBrowseDirectoryInputText();
+
 				filesFound = searchUtil.searchFiles(directoryPath, fileName, searchOption);
 				if(!filesFound.isEmpty()) {
 					TableFrame tableFrame = new TableFrame("File Name", "File Location");
 					for(File file:filesFound)
-						tableFrame.getModel().addRow(new Object[] {file.getName(), file.getAbsolutePath()});
+						tableFrame.addRowToTable(new Object[] {file.getName(), file.getAbsolutePath()});
 				}
-			}catch(NullPointerException ex) {
-				
+				else {
+					JOptionPane.showMessageDialog(searchFrame,
+						    "File with name" +" " + fileName + " not found", "File Utility", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
+			catch(NullPointerException ex) {
+				JOptionPane.showMessageDialog(searchFrame,
+					    "Fields Cannot be empty", "File Utility Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}
 	}
 	class BrowseButtonListener implements ActionListener {
@@ -55,14 +64,12 @@ public class SearchFileController extends GUIController {
 		public void actionPerformed(ActionEvent e) {
 			final JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			fc.setApproveButtonText("Select Directory");
 			int returnVal = fc.showOpenDialog(searchFrame);
 			if(returnVal==JFileChooser.APPROVE_OPTION) {
 				 File file = fc.getSelectedFile();
-				 searchFrame.getDirectoryInput().setText(file.getAbsolutePath());
+				 searchFrame.setBrowseDirectoryInputText(file.getAbsolutePath());
 			}			
-			else {
-				System.out.println("Pressed cancel");
-			}
 		}
 	}
 }
