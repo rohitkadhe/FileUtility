@@ -7,8 +7,6 @@ import java.util.regex.Pattern;
 import interfaces.SearchOption;
 
 public class FileUtil implements SearchOption {
-    public int fileCount = 0;
-
     protected static File[] getFilesInCurrentDir(String path) {
 	File directory = new File(path);
 	File[] files = directory.listFiles();
@@ -85,16 +83,16 @@ public class FileUtil implements SearchOption {
 
     public static boolean matches(String input, String query, String option) {
 	switch (option) {
-	case EQUALS:
-	    return removeFileNameExt(input).equals(query) || input.equals(query);
-	case BEGINS_WITH:
-	    return beginsWith(input, query);
-	case CONTAINS:
-	    return contains(input, query);
-	case ENDS_WITH:
-	    return endsWith(input, query);
-	default:
-	    return false;
-	}
+		case EQUALS:
+		    return removeFileNameExt(input).equals(query) || input.equals(query);
+		case BEGINS_WITH:
+		    return beginsWith(input, query);
+		case CONTAINS:
+		    return contains(input, query);
+		case ENDS_WITH:
+		    return endsWith(input, query);
+		default:
+		    return false;
+		}
     }
 }
