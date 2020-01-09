@@ -17,7 +17,7 @@ public class FileDeleteUtil extends FileSearchUtil {
 	        }
 	        catch(NullPointerException e) 
 	        {
-	        	System.out.println("Item you are trying to delete doesn't exist");
+	        	
 	        }
 	        catch (IOException ioe) 
 	        {
@@ -26,16 +26,17 @@ public class FileDeleteUtil extends FileSearchUtil {
 	    }
 	}
 	
-	public void deleteAllFiles(String path) 
+	public void moveToRecycleBin(String path, String query, String searchOption) 
 	{	
 		
 		for(File file:getFilesInCurrentDir(path)) 
 		{
-			if(file.isDirectory()) 
-			{
-				deleteAllFiles(file.getPath());
-			}
-			moveToTrash(file);
+			if (file.isDirectory()) {
+				moveToRecycleBin(file.getPath(), query, searchOption);
+		    } 
+		    else if (matches(file.getName(), query, searchOption)) {
+				moveToTrash(file);
+		    }
 		}
 	}
 }

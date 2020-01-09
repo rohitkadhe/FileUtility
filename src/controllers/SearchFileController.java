@@ -6,8 +6,10 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
 import models.FileSearchUtil;
 import views.MainFrame;
+import views.ProgressDialog;
 import views.SearchFrame;
 import views.TableFrame;
 
@@ -31,31 +33,40 @@ public class SearchFileController extends GUIController {
 		}
 	}
 	class SearchButtonListener implements ActionListener{
-		private ArrayList<File> filesFound; 
-
+		private ArrayList<File> filesFound; 		private ProgressDialog progressDialog;
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {	
-				String searchOption = searchFrame.getComboBoxSelectedItem();
-				String fileName = searchFrame.getFileNameInputText();
-				String directoryPath = searchFrame.getBrowseDirectoryInputText();
-
-				filesFound = searchUtil.searchFiles(directoryPath, fileName, searchOption);
-				if(!filesFound.isEmpty()) {
-					TableFrame tableFrame = new TableFrame("File Name", "File Location");
-					for(File file:filesFound)
-						tableFrame.addRowToTable(new Object[] {file.getName(), file.getAbsolutePath()});
-				}
-				else {
-					JOptionPane.showMessageDialog(searchFrame,
-						    "File with name" +" " + fileName + " not found", "File Utility", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-			catch(NullPointerException ex) {
-				JOptionPane.showMessageDialog(searchFrame,
-					    "Fields Cannot be empty", "File Utility Error", JOptionPane.ERROR_MESSAGE);
-			}
+		public void actionPerformed(ActionEvent e) {	
+			String searchOption = searchFrame.getComboBoxSelectedItem();
+			String fileName = searchFrame.getFileNameInputText();
+			String directoryPath = searchFrame.getBrowseDirectoryInputText();
 			
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {	
+					progressDialog = new ProgressDialog();
+					progressDialog.setProgressString(SEARCHING);
+					filesFound = searchUtil.searchFiles(directoryPath, fileName, searchOption);
+					if(!createTable(filesFound, fileName)) {						
+						progressDialog.closeDialog();
+						JOptionPane.showMessageDialog(null, NO_FILES_FOUND, HOMEPAGE_TITLE, JOptionPane.INFORMATION_MESSAGE);;
+					}
+					progressDialog.closeDialog();
+				}	
+			});
+			t.start();
+		}
+		
+		private boolean createTable(ArrayList<File> filesFound, String fileName) {
+			if(!filesFound.isEmpty()) {
+				TableFrame tableFrame = new TableFrame(FILE_NAME, FILE_LOCATION);
+				populateTable(filesFound, tableFrame);
+			}
+			return !filesFound.isEmpty();
+		}
+		
+		private void populateTable(ArrayList<File> filesFound, TableFrame tableFrame) {
+			for(File file:filesFound)
+				tableFrame.addRowToTable(new Object[] {file.getName(), file.getAbsolutePath()});
 		}
 	}
 	class BrowseButtonListener implements ActionListener {
@@ -64,7 +75,7 @@ public class SearchFileController extends GUIController {
 		public void actionPerformed(ActionEvent e) {
 			final JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			fc.setApproveButtonText("Select Directory");
+			fc.setApproveButtonText(SELECT_DIRECTORY);
 			int returnVal = fc.showOpenDialog(searchFrame);
 			if(returnVal==JFileChooser.APPROVE_OPTION) {
 				 File file = fc.getSelectedFile();

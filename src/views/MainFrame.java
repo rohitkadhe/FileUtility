@@ -12,10 +12,10 @@ public class MainFrame extends JFrame implements Strings, Colors
 {
 	private static final long serialVersionUID = 1L;
 	
-	private FileUtilButton searchFiles = new FileUtilButton(SEARCHFORFILES);
+	private FileUtilButton searchFiles = new FileUtilButton(SEARCH_FOR_FILES);
 	private FileUtilButton copyFiles = new FileUtilButton(COPYFILES);
-	private FileUtilButton moveFiles = new FileUtilButton(MOVEFILES);
-	private FileUtilButton deleteFiles = new FileUtilButton(DELETEFILES);
+	private FileUtilButton moveFiles = new FileUtilButton(MOVE_FILES);
+	private FileUtilButton deleteFiles = new FileUtilButton(DELETE_FILES);
 	private FileUtilButton exitOut = new FileUtilButton(EXIT);
 	public Container c = new Container();
 	public CardLayout card = new CardLayout();
@@ -26,12 +26,13 @@ public class MainFrame extends JFrame implements Strings, Colors
 		outerPanel.add(createUpperPanel(), BorderLayout.NORTH);
 		outerPanel.add(createCenterPanel(), BorderLayout.CENTER);
 		c.setLayout(card);
-		c.add(outerPanel, HOMEPAGETITLE);
+		c.add(outerPanel, HOMEPAGE_TITLE);
 		this.add(c);
-		this.setTitle(HOMEPAGETITLE);
+		this.setTitle(HOMEPAGE_TITLE);
 		this.setBounds(50, 50, 300, 340);
 		this.setResizable(false);
 		this.setVisible(true);
+		this.setState(Frame.NORMAL);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setupExitButtonAction();
 	}
@@ -40,7 +41,7 @@ public class MainFrame extends JFrame implements Strings, Colors
 	{
 		JPanel upperPanel = new JPanel();
 		upperPanel.setBackground((PRIMARY));
-		JLabel label = new JLabel(HOMEPAGETITLE);
+		JLabel label = new JLabel(HOMEPAGE_TITLE);
 		label.setFont(new Font("Arial", Font.BOLD, 20));
 		upperPanel.add(label);
 		
@@ -57,7 +58,7 @@ public class MainFrame extends JFrame implements Strings, Colors
 		centerPanel.add(moveFiles);
 		centerPanel.add(copyFiles);
 		centerPanel.add(deleteFiles);
-		exitOut.setForeground(Color.RED); 
+		exitOut.setForeground(ACCENT_RED); 
 
 		centerPanel.add(exitOut);
 

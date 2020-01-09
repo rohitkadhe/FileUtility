@@ -1,8 +1,10 @@
 package controllers;
 
+import interfaces.Colors;
+import interfaces.Strings;
 import views.MainFrame;
 
-public abstract class GUIController {
+public abstract class GUIController implements Strings, Colors {
 
 	protected MainFrame mainFrame;
 	

@@ -13,13 +13,17 @@ public class FileSearchUtil extends FileUtil implements SearchOption {
     }
 
     private void searchFile(String path, String searchQuery, ArrayList<File> files, String searchOption) {
-		for (File file : getFilesInCurrentDir(path)) {
-		    if (file.isDirectory()) {
-		    	searchFile(file.getPath(), searchQuery, files, searchOption);
-		    } 
-		    else if (matches(file.getName(), searchQuery, searchOption)) {
-				files.add(file);
-		    }
+		try {			
+			for (File file : getFilesInCurrentDir(path)) {
+				if (file.isDirectory()) {
+					searchFile(file.getPath(), searchQuery, files, searchOption);
+				} 
+				else if (matches(file.getName(), searchQuery, searchOption)) {
+					files.add(file);
+				}
+			}
+		}catch(Exception e) {
+			
 		}
     }
 }

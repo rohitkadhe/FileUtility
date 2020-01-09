@@ -1,13 +1,28 @@
 package interfaces;
 
 public interface Strings {
-    //Titles
-	public static final String HOMEPAGETITLE = "File Utility";
-    //Buttons
-    public static final String SEARCHFORFILES = "Search For Files";
-    public static final String MOVEFILES = "Move Files";
+    
+	public static final String HOMEPAGE_TITLE = "File Utility";
+    public static final String SEARCH_FOR_FILES = "Search For Files";
+    public static final String MOVE_FILES = "Move Files";
     public static final String COPYFILES = "Copy Files";
-    public static final String DELETEFILES = "Delete Files";
+    public static final String DELETE_FILES = "Delete Files";
     public static final String EXIT = "Exit";
+    
+    public static final String SELECT_DIRECTORY = "Select Directory";
+    public static final String NO_FILES_FOUND = "No Files Found";
+    public static final String FILE_NAME = "File Name";
+    public static final String FILE_LOCATION = "File Location";
+    public static final String SOURCE_DIRECTORY = "Source Directory";
+    public static final String DESTINATION_DIRECTORY = "Destination Directory";
+    public static final String SEARCH_FILTER = "Search Filter";
+    public static final String SEARCH = "Search";
+    public static final String BROWSE = "Browse";
+    public static final String DIRECTORY = "Directory";
+    
+    public static final String SEARCHING = "Searching";
+    public static final String COPYING = "Copying";
+    public static final String MOVING = "Moving";
+    public static final String DELETING = "Deleting";
     
 }

@@ -39,7 +39,7 @@ public class TableFrame extends JFrame implements Strings, Colors {
 	}
 	private JPanel createUpperPanel() {
 		JPanel upperPanel = new JPanel();
-		JLabel upperPanelTitle = new JLabel(HOMEPAGETITLE);
+		JLabel upperPanelTitle = new JLabel(HOMEPAGE_TITLE);
 		upperPanelTitle.setFont(new Font("Arial", Font.BOLD, 15));
 		upperPanel.setBackground(PRIMARY);
 		upperPanel.add(upperPanelTitle);
@@ -53,7 +53,6 @@ public class TableFrame extends JFrame implements Strings, Colors {
 		centerPanel.setLayout(new BorderLayout());  
 		JScrollPane scroll = new JScrollPane(table);
 		
-		//This is to set the table columns color 
 		JTableHeader header = table.getTableHeader();
 		header.setBackground(PRIMARY);
 		header.setReorderingAllowed(false);
@@ -72,17 +71,22 @@ public class TableFrame extends JFrame implements Strings, Colors {
 				int row = table.rowAtPoint(evt.getPoint());
 				if(row>=0) {							
 					String path = (String) table.getValueAt(row, 1);
-					String parentPath = new File(path).getParent();	
-					try {
-						Desktop.getDesktop().open(new File(parentPath));
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					openFolderContainingFile(path);
 				}
 			}
 		});
 	}
-	
+	public void openFolderContainingFile(String path) {
+		String parentPath = path;	
+		if(!new File(path).isDirectory()) {
+			parentPath = new File(path).getParent();	
+		}
+		try {
+			Desktop.getDesktop().open(new File(parentPath));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
 	public void addRowToTable(Object[] rowData) {
 		model.addRow(rowData);
 	}
