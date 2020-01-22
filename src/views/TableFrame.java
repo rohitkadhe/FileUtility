@@ -23,20 +23,21 @@ public class TableFrame extends JFrame implements Strings, Colors {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	
+
 	private DefaultTableModel model;
-	
-	public TableFrame(Object ...columnNames) {
-		table = new JTable(new DefaultTableModel(new Object[][] {},columnNames));
+
+	public TableFrame(Object... columnNames) {
+		table = new JTable(new DefaultTableModel(new Object[][] {}, columnNames));
 		model = (DefaultTableModel) table.getModel();
 		this.add(createUpperPanel(), BorderLayout.NORTH);
 		this.add(createCenterPanel(), BorderLayout.CENTER);
-		
+
 		table.setDefaultEditor(Object.class, null);
 		this.setVisible(true);
 		addTableRowListener();
 		this.pack();
 	}
+
 	private JPanel createUpperPanel() {
 		JPanel upperPanel = new JPanel();
 		JLabel upperPanelTitle = new JLabel(HOMEPAGE_TITLE);
@@ -45,41 +46,42 @@ public class TableFrame extends JFrame implements Strings, Colors {
 		upperPanel.add(upperPanelTitle);
 		return upperPanel;
 	}
-	
+
 	private JPanel createCenterPanel() {
 		JPanel centerPanel = new JPanel();
-		
+
 		centerPanel.setBackground(PRIMARY);
-		centerPanel.setLayout(new BorderLayout());  
+		centerPanel.setLayout(new BorderLayout());
 		JScrollPane scroll = new JScrollPane(table);
-		
+
 		JTableHeader header = table.getTableHeader();
 		header.setBackground(PRIMARY);
 		header.setReorderingAllowed(false);
-		
+
 		table.setFillsViewportHeight(true);
-		
+
 		centerPanel.add(scroll, BorderLayout.CENTER);
-		
+
 		return centerPanel;
 	}
-	
+
 	public void addTableRowListener() {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent evt) {
 				int row = table.rowAtPoint(evt.getPoint());
-				if(row>=0) {							
+				if (row >= 0) {
 					String path = (String) table.getValueAt(row, 1);
 					openFolderContainingFile(path);
 				}
 			}
 		});
 	}
+
 	public void openFolderContainingFile(String path) {
-		String parentPath = path;	
-		if(!new File(path).isDirectory()) {
-			parentPath = new File(path).getParent();	
+		String parentPath = path;
+		if (!new File(path).isDirectory()) {
+			parentPath = new File(path).getParent();
 		}
 		try {
 			Desktop.getDesktop().open(new File(parentPath));
@@ -87,6 +89,7 @@ public class TableFrame extends JFrame implements Strings, Colors {
 			e1.printStackTrace();
 		}
 	}
+
 	public void addRowToTable(Object[] rowData) {
 		model.addRow(rowData);
 	}
