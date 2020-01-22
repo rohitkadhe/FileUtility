@@ -57,6 +57,7 @@ public class MoveFileController extends GUIController {
 						JOptionPane.showMessageDialog(null, ERROR_MOVING_FILES, HOMEPAGE_TITLE,
 								JOptionPane.ERROR_MESSAGE);
 					}
+					progressDialog.closeDialog();
 				}
 			});
 			t.start();

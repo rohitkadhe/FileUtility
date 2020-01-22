@@ -55,6 +55,7 @@ public class DeleteFileController extends GUIController {
 						JOptionPane.showMessageDialog(null, ERROR_DELETING_FILES, HOMEPAGE_TITLE,
 								JOptionPane.ERROR_MESSAGE);
 					}
+					progressDialog.closeDialog();
 				}
 			});
 			t.start();

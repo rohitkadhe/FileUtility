@@ -55,6 +55,7 @@ public class CopyFileController extends GUIController {
 						JOptionPane.showMessageDialog(null, ERROR_COPYING_FILES, HOMEPAGE_TITLE,
 								JOptionPane.ERROR_MESSAGE);
 					}
+					progressDialog.closeDialog();
 					copyFrame.openFolderContainingFile(toDirectoryPath);
 				}
 			});

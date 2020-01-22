@@ -51,13 +51,16 @@ public class SearchFileController extends GUIController {
 					progressDialog.setProgressString(SEARCHING);
 					try {
 						filesFound = searchUtil.searchFiles(directoryPath, fileName, searchOption);
-						progressDialog.closeDialog();
-						if(!filesFound.isEmpty()) createTable(filesFound, fileName);
+						if (!filesFound.isEmpty()) {
+							progressDialog.closeDialog();
+							createTable(filesFound, fileName);
+						}
 					} catch (Exception e) {
 						progressDialog.closeDialog();
 						JOptionPane.showMessageDialog(null, NO_FILES_FOUND, HOMEPAGE_TITLE,
 								JOptionPane.INFORMATION_MESSAGE);
 					}
+					progressDialog.closeDialog();
 				}
 			});
 			t.start();
