@@ -1,12 +1,16 @@
 package models;
 
 import java.io.File;
+
+import javax.swing.filechooser.FileSystemView;
+
 import interfaces.SearchOption;
 
 public class FileUtil implements SearchOption {
     protected static File[] getFilesInCurrentDir(String path) {
 		File directory = new File(path);
-		File[] files = directory.listFiles();
+		FileSystemView fsv = FileSystemView.getFileSystemView();
+		File[] files = fsv.getFiles(directory, false);
 		return files;
     }
 
