@@ -16,6 +16,7 @@ public interface Strings {
 	public static final String NO_FILES_FOUND = "No Files Found";
 	public static final String FILE_NAME = "File Name";
 	public static final String FILE_LOCATION = "File Location";
+	public static final String FILES_FOUND = "Files found: ";
 	public static final String SOURCE_DIRECTORY = "Source Directory";
 	public static final String DESTINATION_DIRECTORY = "Destination Directory";
 	public static final String SEARCH_FILTER = "Search Filter";

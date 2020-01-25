@@ -21,7 +21,7 @@ public class SearchFileController extends GUIController {
 
 	public SearchFileController(MainFrame mainFrame) {
 		super(mainFrame);
-		mainFrame.getSearchFiles().setListenser(new MainFrameSearchButtonListener());
+		mainFrame.setSearchFilesListener(new MainFrameSearchButtonListener());
 	}
 
 	class MainFrameSearchButtonListener implements ActionListener {
@@ -53,7 +53,7 @@ public class SearchFileController extends GUIController {
 						filesFound = searchUtil.searchFiles(directoryPath, fileName, searchOption);
 						if (!filesFound.isEmpty()) {
 							progressDialog.closeDialog();
-							createTable(filesFound, fileName);
+							new TableFrame(FILE_NAME, FILE_LOCATION).fillTable(filesFound);
 						}
 					} catch (Exception e) {
 						progressDialog.closeDialog();
@@ -64,16 +64,6 @@ public class SearchFileController extends GUIController {
 				}
 			});
 			t.start();
-		}
-
-		private void createTable(ArrayList<File> filesFound, String fileName) {
-			TableFrame tableFrame = new TableFrame(FILE_NAME, FILE_LOCATION);
-			populateTable(filesFound, tableFrame);
-		}
-
-		private void populateTable(ArrayList<File> filesFound, TableFrame tableFrame) {
-			for (File file : filesFound)
-				tableFrame.addRowToTable(new Object[] { file.getName(), file.getAbsolutePath() });
 		}
 	}
 

@@ -19,7 +19,7 @@ public class DeleteFileController extends GUIController {
 
 	public DeleteFileController(MainFrame mainFrame) {
 		super(mainFrame);
-		mainFrame.getDeleteFiles().setListenser(new MainFrameDeleteButtonListener());
+		mainFrame.setDeleteFilesListener(new MainFrameDeleteButtonListener());
 	}
 
 	class MainFrameDeleteButtonListener implements ActionListener {

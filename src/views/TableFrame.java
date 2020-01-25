@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,18 +24,19 @@ public class TableFrame extends JFrame implements Strings, Colors {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private JLabel filesFoundField;
 
 	private DefaultTableModel model;
 
 	public TableFrame(Object... columnNames) {
 		table = new JTable(new DefaultTableModel(new Object[][] {}, columnNames));
 		model = (DefaultTableModel) table.getModel();
+		table.setDefaultEditor(Object.class, null);
+		addTableRowListener();
+		this.setVisible(true);
 		this.add(createUpperPanel(), BorderLayout.NORTH);
 		this.add(createCenterPanel(), BorderLayout.CENTER);
-
-		table.setDefaultEditor(Object.class, null);
-		this.setVisible(true);
-		addTableRowListener();
+		this.add(createLowerPanel(), BorderLayout.SOUTH);
 		this.pack();
 	}
 
@@ -65,6 +67,14 @@ public class TableFrame extends JFrame implements Strings, Colors {
 		return centerPanel;
 	}
 
+	private JPanel createLowerPanel() {
+		JPanel lowerPanel = new JPanel();
+		lowerPanel.setBackground(PRIMARY);
+		filesFoundField = new JLabel(FILES_FOUND + "0");
+		lowerPanel.add(filesFoundField);
+		return lowerPanel;
+	}
+
 	public void addTableRowListener() {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -90,7 +100,13 @@ public class TableFrame extends JFrame implements Strings, Colors {
 		}
 	}
 
-	public void addRowToTable(Object[] rowData) {
+	public void fillTable(ArrayList<File> filesFound) {
+		for (File file : filesFound)
+			addRowToTable(new Object[] { file.getName(), file.getAbsolutePath() });
+		filesFoundField.setText(FILES_FOUND + (Integer.toString(filesFound.size())));
+	}
+
+	private void addRowToTable(Object[] rowData) {
 		model.addRow(rowData);
 	}
 }

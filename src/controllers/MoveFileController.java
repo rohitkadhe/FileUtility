@@ -19,7 +19,7 @@ public class MoveFileController extends GUIController {
 
 	public MoveFileController(MainFrame mainFrame) {
 		super(mainFrame);
-		mainFrame.getMoveFiles().setListenser(new MainFrameMoveFilesButtonListener());
+		mainFrame.setMoveFilesListener(new MainFrameMoveFilesButtonListener());
 	}
 
 	class MainFrameMoveFilesButtonListener implements ActionListener {

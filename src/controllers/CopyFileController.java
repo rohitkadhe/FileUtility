@@ -19,7 +19,7 @@ public class CopyFileController extends GUIController {
 
 	public CopyFileController(MainFrame mainFrame) {
 		super(mainFrame);
-		mainFrame.getCopyFiles().setListenser(new MainFrameCopyFilesButtonListener());
+		mainFrame.setCopyFilesListener(new MainFrameCopyFilesButtonListener());
 	}
 
 	class MainFrameCopyFilesButtonListener implements ActionListener {

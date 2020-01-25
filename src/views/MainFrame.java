@@ -72,20 +72,20 @@ public class MainFrame extends JFrame implements Strings, Colors {
 		return centerPanel;
 	}
 
-	public FileUtilButton getSearchFiles() {
-		return searchFiles;
+	public void setSearchFilesListener(ActionListener al) {
+		searchFiles.setListenser(al);
 	}
 
-	public FileUtilButton getCopyFiles() {
-		return copyFiles;
+	public void setCopyFilesListener(ActionListener al) {
+		copyFiles.setListenser(al);
 	}
 
-	public FileUtilButton getMoveFiles() {
-		return moveFiles;
+	public void setMoveFilesListener(ActionListener al) {
+		moveFiles.setListenser(al);
 	}
 
-	public FileUtilButton getDeleteFiles() {
-		return deleteFiles;
+	public void setDeleteFilesListener(ActionListener al) {
+		deleteFiles.setListenser(al);
 	}
 
 	public void setupExitButtonAction() {
